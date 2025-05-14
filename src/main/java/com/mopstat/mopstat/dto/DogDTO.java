@@ -1,9 +1,17 @@
 package com.mopstat.mopstat.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;  // opcjonalnie
+
 public class DogDTO {
     private Long id;
+    @NotBlank(message = "Nazwa psa nie może być pusta")
+    @Size(max = 100, message = "Nazwa może mieć maksymalnie 100 znaków")
+
     private String name;
+    @NotBlank(message = "Charakter psa nie może być pusty")
     private String personality;
+    @NotBlank(message = "Ścieżka obrazka jest wymagana")
     private String imagePath;
 
     public DogDTO() {}

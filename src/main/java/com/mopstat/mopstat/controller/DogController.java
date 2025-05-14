@@ -4,12 +4,16 @@ import com.mopstat.mopstat.dto.DogDTO;
 import com.mopstat.mopstat.model.Dog;
 import com.mopstat.mopstat.repository.DogRepository;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;  // opcjonalnie na klasie
+
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/dogs")
+@Validated            // pozwala na walidację metod na poziomie kontrolera
 public class DogController {
 
     private final DogRepository dogRepository;
@@ -48,7 +52,7 @@ public class DogController {
 
     // POST /api/dogs → tworzenie z DTO
     @PostMapping
-    public DogDTO create(@RequestBody DogDTO dto) {
+    public DogDTO create( @Valid @RequestBody DogDTO dto) {
         Dog saved = dogRepository.save(toEntity(dto));
         return toDTO(saved);
     }
