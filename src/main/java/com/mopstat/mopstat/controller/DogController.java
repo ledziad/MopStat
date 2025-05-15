@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/dogs")
 @Validated            // pozwala na walidację metod na poziomie kontrolera
+
 public class DogController {
 
     private final DogRepository dogRepository;

@@ -22,6 +22,9 @@ public class DogDTO {
         this.personality = personality;
         this.imagePath = imagePath;
     }
+    public DogDTO(long id, String name, String personality, String imagePath) {
+        this(Long.valueOf(id), name, personality, imagePath);
+    }
 
     // Gettery i settery
     public Long getId() { return id; }
