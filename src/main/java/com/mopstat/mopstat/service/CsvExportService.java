@@ -5,5 +5,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CsvExportService {
 
-    // TODO: wypełnij potem logiką eksportu CSV
+    /**
+     * Stub eksportu CSV – później wypełnisz logiką z Apache Commons CSV.
+     */
+    public byte[] exportDogRecords(Long dogId) throws Exception {
+        // TODO: rzucaj odpowiednie wyjątki lub zwracaj realne dane
+        return new byte[0];
+    }
 }

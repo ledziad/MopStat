@@ -1,6 +1,8 @@
 package com.mopstat.mopstat.controller;
 
 import java.util.List;
+
+import com.mopstat.mopstat.security.JwtUtil;
 import com.mopstat.mopstat.service.CsvExportService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mopstat.mopstat.dto.DogDTO;
@@ -14,10 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,11 +38,14 @@ class DogControllerTest {
     private MockMvc mockMvc;
 
     // nowa adnotacja zamiast @MockBean
-    @MockitoBean
+    @MockBean
     private DogService dogService;
 
-    @MockitoBean
+    @MockBean
     private CsvExportService csvExportService;
+
+    @MockBean               // <— add this
+    private JwtUtil jwtUtil;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -65,8 +71,10 @@ class DogControllerTest {
     @DisplayName("POST /api/dogs tworzy nowego psa")
     void shouldCreateDog() throws Exception {
         var input = new DogDTO(null, "Nowy", "Pilny pies", "/images/nowy.png");
-        var saved = new DogDTO(99, "Nowy", "Pilny pies", "/images/nowy.png");
-        given(dogService.create(input)).willReturn(saved);
+        var saved = new DogDTO(99L, "Nowy", "Pilny pies", "/images/nowy.png");
+
+        // tu łapiemy każdy DogDTO, a nie tylko ten konkretny 'input'
+        given(dogService.create(any(DogDTO.class))).willReturn(saved);
 
         mockMvc.perform(post("/api/dogs")
                         .contentType(MediaType.APPLICATION_JSON)

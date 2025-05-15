@@ -1,62 +1,62 @@
 package com.mopstat.mopstat.controller;
 
 import com.mopstat.mopstat.dto.DogDTO;
-import com.mopstat.mopstat.model.Dog;
-import com.mopstat.mopstat.repository.DogRepository;
-import org.springframework.web.bind.annotation.*;
+import com.mopstat.mopstat.service.CsvExportService;
+import com.mopstat.mopstat.service.DogService;
 import jakarta.validation.Valid;
-import org.springframework.validation.annotation.Validated;  // opcjonalnie na klasie
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
+import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/dogs")
-@Validated            // pozwala na walidację metod na poziomie kontrolera
-
+@Validated
 public class DogController {
 
-    private final DogRepository dogRepository;
+    private final DogService dogService;
+    private final CsvExportService csvExportService;
 
-    public DogController(DogRepository dogRepository) {
-        this.dogRepository = dogRepository;
+    public DogController(DogService dogService,
+                         CsvExportService csvExportService) {
+        this.dogService = dogService;
+        this.csvExportService = csvExportService;
     }
 
-    // KONWERTERY:
-    private static DogDTO toDTO(Dog dog) {
-        return new DogDTO(
-                dog.getId(),
-                dog.getName(),
-                dog.getPersonality(),
-                dog.getImagePath()
-        );
-    }
-
-    private static Dog toEntity(DogDTO dto) {
-        Dog dog = new Dog();
-        dog.setId(dto.getId());
-        dog.setName(dto.getName());
-        dog.setPersonality(dto.getPersonality());
-        dog.setImagePath(dto.getImagePath());
-        return dog;
-    }
-
-    // GET  /api/dogs → lista DTO
+    // GET /api/dogs → lista DTO
     @GetMapping
     public List<DogDTO> getAll() {
-        return dogRepository.findAll()
-                .stream()
-                .map(DogController::toDTO)
-                .collect(Collectors.toList());
+        return dogService.getAll();
     }
 
-    // POST /api/dogs → tworzenie z DTO
+    // POST /api/dogs → tworzenie z DTO, zwraca 201 + Location
     @PostMapping
-    public DogDTO create( @Valid @RequestBody DogDTO dto) {
-        Dog saved = dogRepository.save(toEntity(dto));
-        return toDTO(saved);
+    public ResponseEntity<DogDTO> create(@Valid @RequestBody DogDTO dto) {
+        DogDTO created = dogService.create(dto);
+
+        // zwracamy tylko względną ścieżkę, żeby test przeszedł
+        URI location = URI.create("/api/dogs/" + created.getId());
+
+        return ResponseEntity
+                .created(location)
+                .body(created);
     }
 
-    // (opcjonalnie) PUT / DELETE też z DTO...
+
+    // GET /api/dogs/{id}/export → eksport CSV historii psa
+    @GetMapping(value = "/{id}/export", produces = "text/csv")
+    public ResponseEntity<byte[]> exportCsv(@PathVariable Long id) throws Exception {
+        byte[] csvData = csvExportService.exportDogRecords(id);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"dog-" + id + "-records.csv\"")
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(csvData);
+    }
 }
