@@ -1,5 +1,7 @@
 package com.mopstat.mopstat.repository;
 
+import com.mopstat.mopstat.model.User;
+
 import com.mopstat.mopstat.model.Dog;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,9 +12,15 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
-@DataJpaTest   (properties = "spring.sql.init.mode=never")
+import com.mopstat.mopstat.model.User;
+import com.mopstat.mopstat.model.Dog;
+import com.mopstat.mopstat.repository.UserRepository;
+import com.mopstat.mopstat.repository.DogRepository;
+
+// ... inne importy
+
+@DataJpaTest(properties = "spring.sql.init.mode=never")
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles("test")
 class DogRepositoryTest {
@@ -20,12 +28,16 @@ class DogRepositoryTest {
     @Autowired
     private DogRepository dogRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Test
     @DisplayName("findAll() zwraca zapisane encje")
     void shouldFindAllDogs() {
-        // baza jest pusta, bo rollback z poprzedniego testu
-        var dog1 = new Dog("Test1", "Charakterny", "/img/1.png");
-        var dog2 = new Dog("Test2", "Spokojny", "/img/2.png");
+        var user = userRepository.save(new User("testuser", "haslo123"));
+
+        var dog1 = new Dog("Test1", "Charakterny", "/img/1.png", user);
+        var dog2 = new Dog("Test2", "Spokojny", "/img/2.png", user);
         dogRepository.saveAll(List.of(dog1, dog2));
 
         var all = dogRepository.findAll();
@@ -37,8 +49,9 @@ class DogRepositoryTest {
     @Test
     @DisplayName("findById() działa poprawnie")
     void shouldFindById() {
-        // też czysta baza na start
-        var dog = new Dog("Solo", "Samotnik", "/img/solo.png");
+        var user = userRepository.save(new User("testuser", "haslo123"));
+
+        var dog = new Dog("Solo", "Samotnik", "/img/solo.png", user);
         Dog saved = dogRepository.save(dog);
 
         var fetched = dogRepository.findById(saved.getId());
@@ -48,4 +61,3 @@ class DogRepositoryTest {
                 .isEqualTo("Solo");
     }
 }
-

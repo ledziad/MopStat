@@ -72,4 +72,18 @@ public class DailyRecordService {
                 record.getDog().getId() // dogId
         );
     }
+    public List<DailyRecordDTO> getRecordsForDog(Long dogId) {
+        // Zabezpieczenie: pies musi należeć do zalogowanego usera!
+        String username = getCurrentUsername();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Dog dog = dogRepository.findById(dogId)
+                .filter(d -> d.getUser().getId().equals(user.getId()))
+                .orElseThrow(() -> new RuntimeException("Nie masz dostępu do tego psa!"));
+
+        List<DailyRecord> records = dailyRecordRepository.findByDogId(dogId);
+        return records.stream().map(this::mapToDto).toList();
+    }
+
 }
