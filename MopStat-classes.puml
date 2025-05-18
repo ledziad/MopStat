@@ -1,0 +1,61 @@
+@startuml
+
+' Użytkownik aplikacji
+class User {
+  - id: Long
+  - username: String
+  - email: String
+  - password: String
+  --
+  + getId()
+  + getUsername()
+  + getEmail()
+}
+
+' Pies należy do jednego użytkownika
+class Dog {
+  - id: Long
+  - name: String
+  - personality: String
+  - imagePath: String
+  --
+  + getId()
+  + getName()
+  + getPersonality()
+  + getImagePath()
+}
+
+' Codzienny wpis dla psa
+class DailyRecord {
+  - id: Long
+  - date: LocalDate
+  - meals: int
+  - poops: int
+  - walks: int
+  - moodNote: String
+  --
+  + getId()
+  + getDate()
+  + getMeals()
+  + getPoops()
+  + getWalks()
+  + getMoodNote()
+}
+
+' (Opcjonalna) punktacja za dzień
+class ScoreEntry {
+  - id: Long
+  - date: LocalDate
+  - score: int
+  --
+  + getId()
+  + getDate()
+  + getScore()
+}
+
+' RELACJE
+User "1" -- "0..*" Dog : "owns >"
+Dog "1" -- "0..*" DailyRecord : "has >"
+Dog "1" -- "0..*" ScoreEntry : "scores >"
+
+@enduml

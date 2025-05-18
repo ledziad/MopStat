@@ -1,99 +1,58 @@
-```markdown
-## 📑 Dokumentacja API MopStat
 
-### Autoryzacja
 
-Po zalogowaniu otrzymujesz **token JWT**.  
-Każde kolejne żądanie do endpointów (poza rejestracją i logowaniem) wymaga tokena.  
-W Swagger UI kliknij „Authorize” (kłódka) i wklej token.  
-W innych narzędziach (np. Postman, fetch) dodaj nagłówek:
-```
 
-Authorization: Bearer <token>
+## 🚀 **Jak uruchomić backend MopStat (Spring Boot)**
 
-````
+1. **Wymagania wstępne:**
 
----
+    * Java 17+ (zalecane JDK 21 lub wyżej)
+    * Maven 3.6+
+    * (Opcjonalnie: IntelliJ IDEA lub VSCode z wtyczką Java)
+    * GIT (jeśli klonujesz repo)
 
-### ENDPOINTY
+2. **Klonowanie projektu:**
 
-| Metoda | Endpoint             | Opis                                       | Wymaga JWT? |
-|--------|----------------------|---------------------------------------------|:-----------:|
-| POST   | `/api/auth/register` | Rejestracja nowego użytkownika              |     ❌      |
-| POST   | `/api/auth/login`    | Logowanie, zwraca token JWT                 |     ❌      |
-| GET    | `/api/dogs`          | Lista psów zalogowanego użytkownika         |     ✅      |
-| POST   | `/api/dogs`          | Dodaj nowego psa                           |     ✅      |
-| GET    | `/api/records`       | Lista wpisów dziennych zalogowanego usera   |     ✅      |
-| POST   | `/api/records`       | Dodaj wpis dzienny                         |     ✅      |
-| GET    | `/api/csv`           | Eksport danych do CSV                      |     ✅      |
+   ```bash
+   git clone https://github.com/ledziad/MopStat.git
+   cd MopStat
+   ```
 
----
+3. **Build projektu (opcjonalnie, Maven):**
 
-### Przykładowe zapytania
+   ```bash
+   mvn clean install
+   ```
 
-**Rejestracja**
-```json
-{
-  "username": "adam",
-  "password": "tajnehaslo"
-}
-````
+4. **Uruchomienie aplikacji:**
 
-**Logowanie**
+   ```bash
+   mvn spring-boot:run
+   ```
 
-```json
-{
-  "username": "adam",
-  "password": "tajnehaslo"
-}
-```
+   Lub w IntelliJ:
 
-*Response:*
+    * Otwórz projekt → kliknij prawym na klasę z adnotacją `@SpringBootApplication` (np. `MopStatApplication`) → **Run 'MopStatApplication'**.
 
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-```
+5. **Dostęp do API:**
 
-**Dodanie psa**
+    * Backend domyślnie działa pod adresem:
+      `http://localhost:8080`
+    * Dokumentacja interaktywna (Swagger UI):
+      `http://localhost:8080/swagger-ui.html`
+      lub
+      `http://localhost:8080/swagger-ui/index.html`
 
-```json
-{
-  "name": "Faworek",
-  "personality": "Rozrabiaka",
-  "imagePath": "/images/fawor.jpg"
-}
-```
+6. **Baza danych:**
 
-**Dodanie wpisu dziennego**
+    * Domyślnie H2 (w pamięci, do testów/dev).
+    * Konsola H2:
+      `http://localhost:8080/h2-console`
+      (login: `sa`, hasło puste, JDBC URL znajdziesz w `application.properties`)
 
-```json
-{
-  "date": "2025-05-20",
-  "meals": 2,
-  "poops": 1,
-  "walks": 2,
-  "moodNote": "Mega energiczny",
-  "dogId": 1
-}
-```
+7. **Domyślna konfiguracja JWT:**
+
+    * Endpoint rejestracji/logowania: `/api/auth/register`, `/api/auth/login`
+    * Po zalogowaniu – token JWT należy przekazywać w nagłówku:
+      `Authorization: Bearer <token>`
 
 ---
-
-### Kody odpowiedzi
-
-* `401 Unauthorized` – brak lub nieprawidłowy token JWT
-* `403 Forbidden` – brak dostępu do danych (nie Twoje psy/wpisy)
-* `404 Not Found` – nie znaleziono psa/wpisu
-* `400 Bad Request` – niepoprawne dane wejściowe
-
----
-
-### Swagger UI
-
-Pełna interaktywna dokumentacja pod adresem:
-`http://localhost:8080/swagger-ui/index.html`
-
-```
-```
