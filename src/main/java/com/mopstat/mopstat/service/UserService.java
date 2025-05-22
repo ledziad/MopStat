@@ -21,10 +21,14 @@ public class UserService {
         if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Nazwa użytkownika już istnieje");
         }
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email już istnieje");
+        }
         User user = new User();
         user.setUsername(dto.getUsername());
+        user.setEmail(dto.getEmail()); // <--- DODAJ TO!
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         User saved = userRepository.save(user);
-        return new UserDTO(saved.getId(), saved.getUsername(), null);
-    }
+        return new UserDTO(saved.getId(), saved.getUsername(), saved.getEmail(), null);    }
+
 }

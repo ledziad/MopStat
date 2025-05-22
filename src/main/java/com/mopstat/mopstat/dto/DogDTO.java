@@ -11,7 +11,6 @@ public class DogDTO {
     private String name;
     @NotBlank(message = "Charakter psa nie może być pusty")
     private String personality;
-    @NotBlank(message = "Ścieżka obrazka jest wymagana")
     private String imagePath;
 
     public DogDTO() {}

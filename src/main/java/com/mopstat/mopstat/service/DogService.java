@@ -48,6 +48,16 @@ public class DogService {
         return toDTO(saved);
     }
 
+    public DogDTO getById(Long id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Dog dog = dogRepository.findById(id)
+                .filter(d -> d.getUser().getId().equals(user.getId()))
+                .orElseThrow(() -> new RuntimeException("Nie masz dostępu do tego psa!"));
+        return toDTO(dog);
+    }
+
     private DogDTO toDTO(Dog dog) {
         return new DogDTO(
                 dog.getId(),

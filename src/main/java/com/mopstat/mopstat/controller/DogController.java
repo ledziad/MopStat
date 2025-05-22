@@ -1,7 +1,9 @@
 package com.mopstat.mopstat.controller;
 
+import com.mopstat.mopstat.dto.DailyRecordDTO;
 import com.mopstat.mopstat.dto.DogDTO;
 import com.mopstat.mopstat.service.CsvExportService;
+import com.mopstat.mopstat.service.DailyRecordService;
 import com.mopstat.mopstat.service.DogService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -21,11 +22,13 @@ public class DogController {
 
     private final DogService dogService;
     private final CsvExportService csvExportService;
+    private final DailyRecordService dailyRecordService;
 
     public DogController(DogService dogService,
-                         CsvExportService csvExportService) {
+                         CsvExportService csvExportService, DailyRecordService dailyRecordService) {
         this.dogService = dogService;
         this.csvExportService = csvExportService;
+        this.dailyRecordService = dailyRecordService;
     }
 
     // GET /api/dogs → lista DTO
@@ -58,5 +61,13 @@ public class DogController {
                         "attachment; filename=\"dog-" + id + "-records.csv\"")
                 .contentType(MediaType.parseMediaType("text/csv"))
                 .body(csvData);
+    }
+    @GetMapping("/{id}/records")
+    public List<DailyRecordDTO> getRecordsForDog(@PathVariable Long id) {
+        return dailyRecordService.getRecordsForDog(id);
+    }
+    @GetMapping("/{id}")
+    public DogDTO getById(@PathVariable Long id) {
+        return dogService.getById(id);
     }
 }

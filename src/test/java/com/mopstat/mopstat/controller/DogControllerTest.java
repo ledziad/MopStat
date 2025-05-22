@@ -6,6 +6,7 @@ import com.mopstat.mopstat.security.JwtUtil;
 import com.mopstat.mopstat.service.CsvExportService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mopstat.mopstat.dto.DogDTO;
+import com.mopstat.mopstat.service.DailyRecordService;
 import com.mopstat.mopstat.service.DogService;
 
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +45,10 @@ class DogControllerTest {
     @MockBean
     private CsvExportService csvExportService;
 
-    @MockBean               // <— add this
+    @MockBean
+    private DailyRecordService dailyRecordService;
+
+    @MockBean
     private JwtUtil jwtUtil;
 
     @Autowired

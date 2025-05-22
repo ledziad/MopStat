@@ -34,7 +34,7 @@ class DogRepositoryTest {
     @Test
     @DisplayName("findAll() zwraca zapisane encje")
     void shouldFindAllDogs() {
-        var user = userRepository.save(new User("testuser", "haslo123"));
+        var user = userRepository.save(new User("testuser", "test@email.com", "haslo123"));
 
         var dog1 = new Dog("Test1", "Charakterny", "/img/1.png", user);
         var dog2 = new Dog("Test2", "Spokojny", "/img/2.png", user);
@@ -49,7 +49,7 @@ class DogRepositoryTest {
     @Test
     @DisplayName("findById() działa poprawnie")
     void shouldFindById() {
-        var user = userRepository.save(new User("testuser", "haslo123"));
+        var user = userRepository.save(new User("testuser", "test@email.com", "haslo123"));
 
         var dog = new Dog("Solo", "Samotnik", "/img/solo.png", user);
         Dog saved = dogRepository.save(dog);
