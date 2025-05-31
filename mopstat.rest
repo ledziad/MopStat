@@ -1,0 +1,134 @@
+@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZXZ1c2VyIiwiaWF0IjoxNzQ4NjgxOTQ3LCJleHAiOjE3NDg2ODU1NDd9.uUvsrlXR-LoPkaPfw_6mQ4FQyh9ktI9PsQON_pf-AYQ
+
+### 1. Rejestracja testowego usera (możesz wykonać raz)
+POST http://localhost:8081/api/users/register
+Content-Type: application/json
+
+{
+  "username": "devuser",
+  "email": "devuser@mopstat.pl",
+  "password": "password123"
+}
+
+### 2. Logowanie — tu dostaniesz JWT do Authorization
+POST http://localhost:8081/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "devuser",
+  "password": "password123"
+}
+
+### 3. Dodaj mopsa Faworka
+POST http://localhost:8081/api/dogs
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Faworek",
+  "personality": "żywiołowy",
+  "imagePath": ""
+}
+
+### 3a. Dodaj mopsa Tadzio
+POST http://localhost:8081/api/dogs
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Tadzio",
+  "personality": "leniuszek",
+  "imagePath": ""
+}
+
+### 3b. Dodaj buldoga Luis
+POST http://localhost:8081/api/dogs
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Luis",
+  "personality": "władca legowiska",
+  "imagePath": ""
+}
+
+### 4. Pobierz psy użytkownika — sprawdź jakie mają ID!
+GET http://localhost:8081/api/dogs
+Authorization: Bearer {{token}}
+
+### 5. Dodaj wpis dzienny dla Faworka (zmień dogId na ID z poprzedniego żądania!)
+POST http://localhost:8081/api/dogs/1/records
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "date": "2025-05-27",
+  "meals": 2,
+  "poops": 1,
+  "walks": 2,
+  "moodNote": "super dzień"
+}
+
+### 5a. Dodaj wpis dzienny dla Tadzio (zmień dogId!)
+POST http://localhost:8081/api/dogs/2/records
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "date": "2025-05-27",
+  "meals": 1,
+  "poops": 1,
+  "walks": 1,
+  "moodNote": "leniwy ranek"
+}
+
+### 5b. Dodaj wpis dzienny dla Luis (zmień dogId!)
+POST http://localhost:8081/api/dogs/3/records
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "date": "2025-05-27",
+  "meals": 3,
+  "poops": 2,
+  "walks": 2,
+  "moodNote": "znalazł buta w legowisku"
+}
+
+### 6. Pobierz wpisy dzienne dla Faworka
+GET http://localhost:8081/api/dogs/1/records
+Authorization: Bearer {{token}}
+
+### 7. Pobierz punkty za dziś dla Faworka
+GET http://localhost:8081/api/dogs/1/score/today
+Authorization: Bearer {{token}}
+
+### 8. Pobierz punkty Faworka w zakresie dat (ostatni tydzień)
+GET http://localhost:8081/api/dogs/1/score?from=2025-05-20&to=2025-05-27
+Authorization: Bearer {{token}}
+### 9. Pobierz podsumowanie punktów wszystkich psów (DASHBOARD)
+GET http://localhost:8081/api/score/summary
+Authorization: Bearer {{token}}
+
+### 10. Edytuj wpis dzienny (zmień dogId i recordId na swoje!)
+PUT http://localhost:8081/api/dogs/1/records/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 1,
+  "date": "2025-05-27",
+  "meals": 3,
+  "poops": 1,
+  "walks": 2,
+  "moodNote": "Zmieniona notatka po edycji",
+  "dogId": 1
+}
+
+### 11. Usuń wpis dzienny (zmień dogId i recordId na swoje!)
+DELETE http://localhost:8081/api/dogs/1/records/1
+Authorization: Bearer {{token}}
+
+### 12. Usuń psa (zmień dogId na ID swojego psa!)
+DELETE http://localhost:8081/api/dogs/2
+Authorization: Bearer {{token}}

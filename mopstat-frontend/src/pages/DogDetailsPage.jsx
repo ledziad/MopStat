@@ -38,14 +38,29 @@ export default function DogDetailsPage() {
       {dog.imagePath && <img src={dog.imagePath} alt={dog.name} width={120} style={{ margin: 10, borderRadius: 10 }} />}
       <h3>Wpisy dzienne</h3>
       <button onClick={() => navigate(`/add-record/${dog.id}`)}>Dodaj wpis dzienny</button>
-      <ul>
-        {records.length === 0 && <li>Brak wpisów dziennych.</li>}
-        {records.map(rec => (
-          <li key={rec.id}>
-            <b>{rec.date}:</b> spacery: {rec.walks}, kupki: {rec.poops}, posiłki: {rec.meals}, nastrój: {rec.moodNote}
-          </li>
-        ))}
-      </ul>
+    <ul>
+      {records.length === 0 && <li>Brak wpisów dziennych.</li>}
+      {records.map(rec => (
+        <li key={rec.id} style={{ marginBottom: 14, borderBottom: "1px solid #eee", paddingBottom: 6 }}>
+          <b>{rec.date}:</b> spacery: {rec.walks}, kupki: {rec.poops}, posiłki: {rec.meals}, nastrój: {rec.moodNote}
+          <button
+            style={{
+              marginLeft: 12,
+              background: "#b7d3b3",
+              color: "#3d2c16",
+              border: "none",
+              borderRadius: 8,
+              padding: "0.25em 0.9em",
+              cursor: "pointer"
+            }}
+            onClick={() => navigate(`/dogs/${dog.id}/records/${rec.id}/edit`)}
+          >
+            ✏️ Edytuj
+          </button>
+        </li>
+      ))}
+    </ul>
+
       <button style={{ marginTop: 16 }} onClick={() => navigate("/dogs")}>Wróć do listy psów</button>
     </div>
   );

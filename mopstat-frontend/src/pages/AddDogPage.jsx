@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function AddDogPage() {
   const [name, setName] = useState("");
@@ -13,7 +13,6 @@ export default function AddDogPage() {
     e.preventDefault();
     setError("");
     try {
-      // Token z localStorage, jak w innych requestach
       const token = localStorage.getItem("jwt");
       await axios.post("http://localhost:8081/api/dogs", {
         name,
@@ -24,14 +23,14 @@ export default function AddDogPage() {
           Authorization: `Bearer ${token}`,
         }
       });
-      navigate("/dogs"); // Po sukcesie wracamy na listę psów
+      navigate("/dogs");
     } catch (err) {
       setError("Błąd dodawania psa! Uzupełnij poprawnie pola.");
     }
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", marginTop: 80 }}>
+    <div className="add-dog-page">
       <h2>Dodaj nowego psa</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -54,8 +53,11 @@ export default function AddDogPage() {
           onChange={(e) => setImagePath(e.target.value)}
         /><br/>
         <button type="submit">Dodaj mopsa</button>
+        <Link to="/dogs">
+          <button type="button">Anuluj</button>
+        </Link>
       </form>
-      {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 }

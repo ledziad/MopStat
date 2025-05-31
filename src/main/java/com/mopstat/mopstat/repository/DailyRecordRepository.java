@@ -11,4 +11,6 @@ public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long> 
 
     // NOWA METODA: Zwraca wpisy wszystkich psów należących do konkretnego użytkownika
     List<DailyRecord> findAllByDog_User_Id(Long userId);
+void deleteAllByDogId(Long dogId);
 }
+

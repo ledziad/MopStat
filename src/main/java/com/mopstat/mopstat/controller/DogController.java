@@ -11,8 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -62,12 +64,29 @@ public class DogController {
                 .contentType(MediaType.parseMediaType("text/csv"))
                 .body(csvData);
     }
-    @GetMapping("/{id}/records")
-    public List<DailyRecordDTO> getRecordsForDog(@PathVariable Long id) {
-        return dailyRecordService.getRecordsForDog(id);
-    }
+//    @GetMapping("/{id}/records")
+//    public List<DailyRecordDTO> getRecordsForDog(@PathVariable Long id) {
+//        return dailyRecordService.getRecordsForDog(id);
+//    }
     @GetMapping("/{id}")
     public DogDTO getById(@PathVariable Long id) {
         return dogService.getById(id);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDog(@PathVariable Long id, Principal principal) {
+        dogService.deleteDogById(id, principal.getName());
+        return ResponseEntity.ok().build();
+    }
+    @PutMapping("/api/dogs/{id}")
+    public ResponseEntity<DogDTO> updateDog(
+            @PathVariable Long id,
+            @RequestBody DogDTO dto,
+            Authentication authentication
+    ) {
+        String username = authentication.getName();
+        DogDTO updated = dogService.update(id, dto, username);
+        return ResponseEntity.ok(updated);
+    }
+
+
 }
