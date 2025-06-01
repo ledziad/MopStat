@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function AddRecordPage() {
   const { dogId } = useParams();
@@ -72,6 +72,9 @@ export default function AddRecordPage() {
           onChange={e => setMoodNote(e.target.value)}
         />
         <button type="submit">Dodaj wpis</button>
+        <Link to={`/dogs/${dogId}`}>
+                  <button type="button">Anuluj</button>
+                </Link>
       </form>
       {error && <div className="error">{error}</div>}
     </div>

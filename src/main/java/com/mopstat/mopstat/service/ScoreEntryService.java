@@ -19,6 +19,9 @@ public class ScoreEntryService {
     private final DogRepository dogRepo;
 
     @Autowired
+    private ScoreEntryRepository scoreEntryRepository;
+
+    @Autowired
     public ScoreEntryService(ScoreEntryRepository scoreEntryRepo, DogRepository dogRepo) {
         this.scoreEntryRepo = scoreEntryRepo;
         this.dogRepo = dogRepo;
@@ -52,5 +55,8 @@ public class ScoreEntryService {
     // Pobiera punktację dla psa w danym dniu
     public Optional<ScoreEntry> getScoreForDogAndDate(Dog dog, LocalDate date) {
         return scoreEntryRepo.findByDogAndDate(dog, date);
+    }
+    public List<ScoreEntry> getAllScoresForDog(Dog dog) {
+        return scoreEntryRepository.findAllByDog(dog);
     }
 }

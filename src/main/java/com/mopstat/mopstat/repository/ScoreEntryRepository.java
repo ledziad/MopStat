@@ -12,6 +12,7 @@ public interface ScoreEntryRepository extends JpaRepository<ScoreEntry, Long> {
     Optional<ScoreEntry> findByDogAndDate(Dog dog, LocalDate date);
     List<ScoreEntry> findByDogAndDateBetween(Dog dog, LocalDate from, LocalDate to);
     List<ScoreEntry> findAllByDogId(Long dogId);
+    List<ScoreEntry> findAllByDog(Dog dog);
 void deleteAllByDogId(Long dogId);
 }
 

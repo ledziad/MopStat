@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZXZ1c2VyIiwiaWF0IjoxNzQ4NjgxOTQ3LCJleHAiOjE3NDg2ODU1NDd9.uUvsrlXR-LoPkaPfw_6mQ4FQyh9ktI9PsQON_pf-AYQ
+@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZXZ1c2VyIiwiaWF0IjoxNzQ4Nzk5MDg0LCJleHAiOjE3NDg4MDI2ODR9.6z6gWXRVadN5USHv5pUuf0SIHw9oVf1ot4TGnUoyL1o
 
 ### 1. Rejestracja testowego usera (możesz wykonać raz)
 POST http://localhost:8081/api/users/register
@@ -106,6 +106,7 @@ Authorization: Bearer {{token}}
 ### 8. Pobierz punkty Faworka w zakresie dat (ostatni tydzień)
 GET http://localhost:8081/api/dogs/1/score?from=2025-05-20&to=2025-05-27
 Authorization: Bearer {{token}}
+
 ### 9. Pobierz podsumowanie punktów wszystkich psów (DASHBOARD)
 GET http://localhost:8081/api/score/summary
 Authorization: Bearer {{token}}
@@ -124,11 +125,31 @@ Authorization: Bearer {{token}}
   "moodNote": "Zmieniona notatka po edycji",
   "dogId": 1
 }
+### 10. Pobierz punkty Faworka (wszystkie daty)
+GET http://localhost:8081/api/dogs/1/score
+Authorization: Bearer {{token}}
 
-### 11. Usuń wpis dzienny (zmień dogId i recordId na swoje!)
+### 11. Pobierz punkty Faworka w zakresie dat (ostatni tydzień)
+GET http://localhost:8081/api/dogs/1/score?from=2025-05-20&to=2025-05-27
+Authorization: Bearer {{token}}
+
+### 12. Pobierz punkty Luisa (wszystkie daty)
+GET http://localhost:8081/api/dogs/3/score
+Authorization: Bearer {{token}}
+
+### 13. Pobierz podsumowanie punktów wszystkich psów (DASHBOARD)
+GET http://localhost:8081/api/score/summary
+Authorization: Bearer {{token}}
+
+### 14. Usuń wpis dzienny (zmień dogId i recordId na swoje!)
 DELETE http://localhost:8081/api/dogs/1/records/1
 Authorization: Bearer {{token}}
 
-### 12. Usuń psa (zmień dogId na ID swojego psa!)
+### 15. Usuń mopsa (np. Tadzio, dogId=2)
+DELETE http://localhost:8081/api/dogs/2
+Authorization: Bearer {{token}}
+
+
+### 16. Usuń psa (zmień dogId na ID swojego psa!)
 DELETE http://localhost:8081/api/dogs/2
 Authorization: Bearer {{token}}
