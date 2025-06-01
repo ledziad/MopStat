@@ -7,10 +7,8 @@ export default function DogsPage() {
   const [dogs, setDogs] = useState([]);
   const [error, setError] = useState("");
   const [totals, setTotals] = useState({ meals: 0, poops: 0, walks: 0, moods: 0 });
-  const [scores, setScores] = useState({});
-  const [totalScore, setTotalScore] = useState(0);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [topDog, setTopDog] = useState(null);
+  const [summary, setSummary] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +17,7 @@ export default function DogsPage() {
       navigate("/login");
       return;
     }
+    // Pobierz psy
     axios
       .get("http://localhost:8081/api/dogs", {
         headers: { Authorization: `Bearer ${token}` },
@@ -45,34 +44,6 @@ export default function DogsPage() {
         );
         setTotals({ meals, poops, walks, moods });
         setTotalRecords(records);
-
-        // Dashboard punktów – pobierz score dla każdego psa
-        let scoresObj = {};
-        let sum = 0;
-        let bestScore = -1;
-        let bestDog = null;
-        await Promise.all(
-          response.data.map(async (dog) => {
-            try {
-              const res = await axios.get(
-                `http://localhost:8081/api/dogs/${dog.id}/score`,
-                { headers: { Authorization: `Bearer ${token}` } }
-              );
-              const score = res.data?.score ?? 0;
-              scoresObj[dog.id] = score;
-              sum += score;
-              if (score > bestScore) {
-                bestScore = score;
-                bestDog = dog;
-              }
-            } catch {
-              scoresObj[dog.id] = 0;
-            }
-          })
-        );
-        setScores(scoresObj);
-        setTotalScore(sum);
-        setTopDog(bestDog);
       })
       .catch((err) => {
         setError("Błąd pobierania psów! Zaloguj się ponownie.");
@@ -81,14 +52,28 @@ export default function DogsPage() {
           navigate("/login");
         }
       });
+
+    // Pobierz dashboard summary (punkty, ranking)
+    axios
+      .get("http://localhost:8081/api/score/summary", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setSummary(res.data))
+      .catch(() => {/* można dodać obsługę błędu */});
+
   }, [navigate]);
 
   // Przygotowanie danych do wykresu
-  const chartData = dogs.map(dog => ({
-    name: dog.name,
-    score: scores[dog.id] ?? 0,
-  }));
+  const chartData = summary?.dogScores?.map(d => ({
+    name: d.dogName,
+    score: d.score,
+  })) || [];
   const pastelColors = ['#d7c7ae', '#b7d3b3', '#f5ecfc', '#fbe6d5', '#eafcf5', '#fcf0ec'];
+
+  // Top mops (najwyższy wynik)
+  const topDogScore = summary?.dogScores?.length
+    ? summary.dogScores.reduce((a, b) => (a.score > b.score ? a : b))
+    : null;
 
   return (
     <div className="dogs-page">
@@ -122,7 +107,7 @@ export default function DogsPage() {
       <div className="dashboard-mops">
         <div className="dashboard-tile">
           <div className="dashboard-label">Suma punktów:</div>
-          <div className="dashboard-value">{totalScore}</div>
+          <div className="dashboard-value">{summary?.totalScore ?? 0}</div>
         </div>
         <div className="dashboard-tile">
           <div className="dashboard-label">Liczba wpisów:</div>
@@ -131,16 +116,9 @@ export default function DogsPage() {
         <div className="dashboard-tile">
           <div className="dashboard-label">Top mops:</div>
           <div className="dashboard-value">
-            {topDog ? (
-              <>
-                <b>{topDog.name}</b>
-                {scores[topDog.id] > 0 && (
-                  <> ({scores[topDog.id]} pkt)</>
-                )}
-              </>
-            ) : (
-              <>brak</>
-            )}
+            {topDogScore ? (
+              <b>{topDogScore.name} ({topDogScore.score} pkt)</b>
+            ) : "brak"}
           </div>
         </div>
       </div>
