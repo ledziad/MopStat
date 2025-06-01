@@ -39,19 +39,19 @@ export default function AddDogPage() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-        /><br/>
+        />
         <input
           type="text"
           placeholder="Osobowość (np. wesoły, leniwy...)"
           value={personality}
           onChange={(e) => setPersonality(e.target.value)}
-        /><br/>
+        />
         <input
           type="text"
           placeholder="Link do zdjęcia (opcjonalnie)"
           value={imagePath}
           onChange={(e) => setImagePath(e.target.value)}
-        /><br/>
+        />
         <button type="submit">Dodaj mopsa</button>
         <Link to="/dogs">
           <button type="button">Anuluj</button>

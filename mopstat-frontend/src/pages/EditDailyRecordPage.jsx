@@ -60,17 +60,9 @@ export default function EditDailyRecordPage() {
   if (loading) return <div style={{ textAlign: "center", marginTop: 60 }}>Ładowanie…</div>;
 
   return (
-    <div style={{
-      maxWidth: 420,
-      margin: "auto",
-      marginTop: 40,
-      background: "#f9f5ef",
-      borderRadius: 24,
-      boxShadow: "0 2px 12px #e6e0d6",
-      padding: "2.5em"
-    }}>
-      <h2 style={{ color: "#604c32", marginBottom: 16 }}>Edytuj wpis dzienny</h2>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+    <div className="edit-record-page">
+      <h2>Edytuj wpis dzienny</h2>
+      <form onSubmit={handleSubmit}>
         <label>
           Data:
           <input
@@ -78,13 +70,6 @@ export default function EditDailyRecordPage() {
             name="date"
             value={record.date}
             onChange={handleChange}
-            style={{
-              borderRadius: 12,
-              border: "1px solid #e3e3db",
-              padding: "0.55em",
-              background: "#f8f3ea",
-              marginTop: 6
-            }}
             required
           />
         </label>
@@ -97,13 +82,6 @@ export default function EditDailyRecordPage() {
             onChange={handleChange}
             min={0} max={10}
             placeholder="np. 2"
-            style={{
-              borderRadius: 12,
-              border: "1px solid #e3e3db",
-              padding: "0.55em",
-              background: "#f8f3ea",
-              marginTop: 6
-            }}
             required
           />
         </label>
@@ -116,13 +94,6 @@ export default function EditDailyRecordPage() {
             onChange={handleChange}
             min={0} max={10}
             placeholder="np. 1"
-            style={{
-              borderRadius: 12,
-              border: "1px solid #e3e3db",
-              padding: "0.55em",
-              background: "#f8f3ea",
-              marginTop: 6
-            }}
             required
           />
         </label>
@@ -135,60 +106,27 @@ export default function EditDailyRecordPage() {
             onChange={handleChange}
             min={0} max={10}
             placeholder="np. 2"
-            style={{
-              borderRadius: 12,
-              border: "1px solid #e3e3db",
-              padding: "0.55em",
-              background: "#f8f3ea",
-              marginTop: 6
-            }}
             required
           />
         </label>
-        <label>
-          Notatka / Nastrój:
-          <input
-            name="moodNote"
-            value={record.moodNote}
-            onChange={handleChange}
-            placeholder="np. wesoły, energiczny, śpioch"
-            style={{
-              borderRadius: 12,
-              border: "1px solid #e3e3db",
-              padding: "0.55em",
-              background: "#f8f3ea",
-              marginTop: 6
-            }}
-          />
-        </label>
-        <div style={{ display: "flex", gap: 12, marginTop: 10 }}>
-          <button
-            type="submit"
-            style={{
-              background: "linear-gradient(90deg, #d7c7ae, #b7d3b3)",
-              color: "#3d2c16",
-              border: "none",
-              borderRadius: 12,
-              padding: "0.7em 1.6em",
-              fontWeight: "bold",
-              cursor: "pointer"
-            }}>
-            Zapisz zmiany
-          </button>
-          <Link to={`/dogs/${dogId}`} style={{ textDecoration: "none" }}>
-            <button type="button" style={{
-              background: "#eee4d4",
-              color: "#604c32",
-              border: "none",
-              borderRadius: 12,
-              padding: "0.7em 1.6em",
-              cursor: "pointer"
-            }}>
-              Anuluj
-            </button>
+      <label>
+        Notatka / Nastrój:
+        <textarea
+          name="moodNote"
+          value={record.moodNote}
+          onChange={handleChange}
+          placeholder="np. wesoły, energiczny, śpioch"
+          rows={2}
+          className="edit-textarea"
+        />
+      </label>
+        <div className="form-buttons">
+          <button className="save-btn" type="submit">Zapisz zmiany</button>
+          <Link to={`/dogs/${dogId}`}>
+            <button className="cancel-btn" type="button">Anuluj</button>
           </Link>
         </div>
-        {error && <div style={{ color: "crimson", marginTop: 8 }}>{error}</div>}
+        {error && <div className="error">{error}</div>}
       </form>
     </div>
   );

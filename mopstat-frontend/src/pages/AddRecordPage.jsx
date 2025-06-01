@@ -35,7 +35,7 @@ export default function AddRecordPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", marginTop: 60 }}>
+    <div className="add-record-page">
       <h2>Dodaj wpis dzienny</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -43,37 +43,37 @@ export default function AddRecordPage() {
           value={date}
           onChange={e => setDate(e.target.value)}
           required
-        /><br/>
+        />
         <input
           type="number"
           min={0}
           placeholder="Ile posiłków?"
           value={meals}
           onChange={e => setMeals(e.target.value)}
-        /><br/>
+        />
         <input
           type="number"
           min={0}
           placeholder="Ile kupek?"
           value={poops}
           onChange={e => setPoops(e.target.value)}
-        /><br/>
+        />
         <input
           type="number"
           min={0}
           placeholder="Ile spacerów?"
           value={walks}
           onChange={e => setWalks(e.target.value)}
-        /><br/>
+        />
         <input
           type="text"
           placeholder="Nastrój/uwagi"
           value={moodNote}
           onChange={e => setMoodNote(e.target.value)}
-        /><br/>
+        />
         <button type="submit">Dodaj wpis</button>
       </form>
-      {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 }

@@ -14,8 +14,6 @@ export default function DogsPage() {
       navigate("/login");
       return;
     }
-
-    // Pobierz psy użytkownika
     axios
       .get("http://localhost:8081/api/dogs", {
         headers: { Authorization: `Bearer ${token}` },
@@ -50,20 +48,10 @@ export default function DogsPage() {
   }, [navigate]);
 
   return (
-    <div style={{ maxWidth: 520, margin: "auto", marginTop: 40, background: "#f9f5ef", borderRadius: 24, boxShadow: "0 2px 12px #e6e0d6", padding: "2em" }}>
-      <h2 style={{ color: "#604c32" }}>Twoje psy</h2>
+    <div className="dogs-page">
+      <h2>Twoje psy</h2>
       <button
-        style={{
-          background: "linear-gradient(90deg, #d7c7ae, #b7d3b3)",
-          color: "#3d2c16",
-          border: "none",
-          borderRadius: 12,
-          padding: "0.7em 1.6em",
-          fontWeight: "bold",
-          marginBottom: 24,
-          boxShadow: "0 2px 10px #ececec",
-          cursor: "pointer"
-        }}
+        className="export-btn"
         onClick={async () => {
           const token = localStorage.getItem("jwt");
           try {
@@ -87,109 +75,59 @@ export default function DogsPage() {
       >
         📥 Pobierz CSV
       </button>
-
-      {/* Kafelki mopsowe */}
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: 24,
-        margin: "24px 0"
-      }}>
-        <div style={{ background: "#fffbe7", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px #ececec" }}>
-          <div style={{ fontSize: "2.1rem" }}>🍖</div>
+      <div className="summary-row">
+        <div className="summary-tile meals">
+          <div>🍖</div>
           <div>Karmień: <b>{totals.meals}</b></div>
         </div>
-        <div style={{ background: "#eafcf5", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px #ececec" }}>
-          <div style={{ fontSize: "2.1rem" }}>💩</div>
+        <div className="summary-tile poops">
+          <div>💩</div>
           <div>Kupek: <b>{totals.poops}</b></div>
         </div>
-        <div style={{ background: "#f5ecfc", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px #ececec" }}>
-          <div style={{ fontSize: "2.1rem" }}>🚶</div>
+        <div className="summary-tile walks">
+          <div>🚶</div>
           <div>Spacerów: <b>{totals.walks}</b></div>
         </div>
-        <div style={{ background: "#fcf0ec", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px #ececec" }}>
-          <div style={{ fontSize: "2.1rem" }}>😄</div>
+        <div className="summary-tile moods">
+          <div>😄</div>
           <div>Nastroje: <b>{totals.moods}</b></div>
         </div>
       </div>
-
       <Link to="/add-dog">
-        <button style={{
-          marginBottom: 24,
-          background: "#b7d3b3",
-          color: "#3d2c16",
-          border: "none",
-          borderRadius: 12,
-          padding: "0.7em 1.4em",
-          fontWeight: "bold",
-          boxShadow: "0 2px 6px #e3e3db",
-          cursor: "pointer"
-        }}>
+        <button className="add-btn">
           ➕ Dodaj nowego psa
         </button>
       </Link>
-      <ul style={{ marginTop: 20, padding: 0 }}>
+      <ul className="dog-list">
         {dogs.length === 0 && <li>Brak psów – dodaj swojego mopsa!</li>}
         {dogs.map((dog) => (
-          <li key={dog.id} style={{
-            marginBottom: 16,
-            borderBottom: "1px solid #ede6d7",
-            paddingBottom: 10,
-            listStyle: "none"
-          }}>
-            <strong style={{ color: "#6d573b" }}>{dog.name}</strong>
-            <div style={{ color: "#3d2c16" }}>Osobowość: {dog.personality}</div>
+          <li key={dog.id}>
+            <div className="dog-name">{dog.name}</div>
+            <div className="dog-personality">Osobowość: {dog.personality}</div>
             {dog.imagePath && (
               <img
                 src={dog.imagePath}
                 alt={dog.name}
-                width={80}
-                height={80}
-                style={{ objectFit: "cover", borderRadius: 10, marginTop: 8 }}
+                className="dog-img"
               />
             )}
             <br />
             <Link to={`/dogs/${dog.id}`}>
-              <button style={{
-                marginRight: 12,
-                background: "#f3e7d5",
-                color: "#5e4429",
-                border: "none",
-                borderRadius: 10,
-                padding: "0.5em 1em",
-                cursor: "pointer"
-              }}>
+              <button className="details-btn">
                 Zobacz szczegóły
               </button>
             </Link>
-            {/* Przyciski pastelowe */}
             <Link to={`/dogs/${dog.id}/edit`}>
-              <button style={{
-                background: "#b7d3b3",
-                color: "#3d2c16",
-                border: "none",
-                borderRadius: 10,
-                padding: "0.5em 1em",
-                cursor: "pointer"
-              }}>
+              <button className="edit-btn">
                 ✏️ Edytuj
               </button>
             </Link>
           </li>
         ))}
       </ul>
-      {error && <div style={{ color: "crimson", marginTop: 10 }}>{error}</div>}
+      {error && <div className="error">{error}</div>}
       <button
-        style={{
-          marginTop: 25,
-          background: "#e1d6c0",
-          color: "#604c32",
-          border: "none",
-          borderRadius: 12,
-          padding: "0.6em 1.4em",
-          fontWeight: "bold",
-          cursor: "pointer"
-        }}
+        className="logout-btn"
         onClick={() => {
           localStorage.removeItem("jwt");
           navigate("/login");

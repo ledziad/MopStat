@@ -36,7 +36,7 @@ export default function EditDogPage() {
       await axios.put(`http://localhost:8081/api/dogs/${id}`, dog, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      navigate("/"); // Po edycji wraca do listy psów
+      navigate("/dogs");
     } catch (err) {
       setError(
         err.response?.data && typeof err.response.data === "string"
@@ -49,17 +49,9 @@ export default function EditDogPage() {
   if (loading) return <div style={{ textAlign: "center", marginTop: 60 }}>Ładowanie…</div>;
 
   return (
-    <div style={{
-      maxWidth: 420,
-      margin: "auto",
-      marginTop: 40,
-      background: "#f9f5ef",
-      borderRadius: 24,
-      boxShadow: "0 2px 12px #e6e0d6",
-      padding: "2.5em"
-    }}>
-      <h2 style={{ color: "#604c32", marginBottom: 16 }}>Edytuj mopsa</h2>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+    <div className="edit-dog-page">
+      <h2>Edytuj mopsa</h2>
+      <form onSubmit={handleSubmit}>
         <label>
           Imię mopsa:
           <input
@@ -67,14 +59,8 @@ export default function EditDogPage() {
             value={dog.name}
             onChange={handleChange}
             placeholder="Podaj imię mopsa"
-            style={{
-              borderRadius: 12,
-              border: "1px solid #e3e3db",
-              padding: "0.55em",
-              background: "#f8f3ea",
-              marginTop: 6
-            }}
             required
+            type="text"
           />
         </label>
         <label>
@@ -84,13 +70,7 @@ export default function EditDogPage() {
             value={dog.personality}
             onChange={handleChange}
             placeholder="Napisz, jaki jest Twój mops"
-            style={{
-              borderRadius: 12,
-              border: "1px solid #e3e3db",
-              padding: "0.55em",
-              background: "#f8f3ea",
-              marginTop: 6
-            }}
+            type="text"
           />
         </label>
         <label>
@@ -100,43 +80,20 @@ export default function EditDogPage() {
             value={dog.imagePath}
             onChange={handleChange}
             placeholder="Wklej link do zdjęcia mopsa"
-            style={{
-              borderRadius: 12,
-              border: "1px solid #e3e3db",
-              padding: "0.55em",
-              background: "#f8f3ea",
-              marginTop: 6
-            }}
+            type="text"
           />
         </label>
-        <div style={{ display: "flex", gap: 12, marginTop: 10 }}>
-          <button
-            type="submit"
-            style={{
-              background: "#e3eed2",
-              color: "#3d2c16",
-              border: "none",
-              borderRadius: 12,
-              padding: "0.7em 1.6em",
-              fontWeight: "bold",
-              cursor: "pointer"
-            }}>
+        <div className="form-buttons">
+          <button type="submit" className="save-btn">
             Zapisz zmiany
           </button>
-          <Link to="/dogs" style={{ textDecoration: "none" }}>
-            <button type="button" style={{
-              background: "#eee4d4",
-              color: "#604c32",
-              border: "none",
-              borderRadius: 12,
-              padding: "0.7em 1.6em",
-              cursor: "pointer"
-            }}>
+          <Link to="/dogs">
+            <button type="button" className="cancel-btn">
               Anuluj
             </button>
           </Link>
         </div>
-        {error && <div style={{ color: "crimson", marginTop: 8 }}>{error}</div>}
+        {error && <div className="error">{error}</div>}
       </form>
     </div>
   );

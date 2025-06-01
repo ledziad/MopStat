@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -25,7 +24,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ maxWidth: 350, margin: "auto", marginTop: 100 }}>
+    <div className="login-page">
       <h2>Logowanie MopStat</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -34,21 +33,21 @@ export default function LoginPage() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-        /><br/>
+        />
         <input
           type="password"
           placeholder="Hasło"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-        /><br/>
+        />
         <button type="submit">Zaloguj</button>
       </form>
-      {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
+      {error && <div className="error">{error}</div>}
 
-    <div style={{ marginTop: 10 }}>
-      <Link to="/register">Nie masz konta? Zarejestruj się</Link>
-    </div>
+      <div className="switch-link">
+        <Link to="/register">Nie masz konta? Zarejestruj się</Link>
+      </div>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div style={{ maxWidth: 350, margin: "auto", marginTop: 100 }}>
+    <div className="register-page">
       <h2>Rejestracja MopStat</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -37,26 +37,26 @@ export default function RegisterPage() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-        /><br/>
+        />
         <input
           type="email"
           placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-        /><br/>
+        />
         <input
           type="password"
           placeholder="Hasło"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-        /><br/>
+        />
         <button type="submit">Zarejestruj</button>
       </form>
-      {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
-      {success && <div style={{ color: "green", marginTop: 10 }}>Rejestracja udana! Przekierowanie...</div>}
-      <div style={{ marginTop: 10 }}>
+      {error && <div className="error">{error}</div>}
+      {success && <div className="success">Rejestracja udana! Przekierowanie...</div>}
+      <div className="switch-link">
         <Link to="/login">Masz już konto? Zaloguj się</Link>
       </div>
     </div>
