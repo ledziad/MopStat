@@ -77,7 +77,7 @@ public class DogController {
         dogService.deleteDogById(id, principal.getName());
         return ResponseEntity.ok().build();
     }
-    @PutMapping("/api/dogs/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<DogDTO> updateDog(
             @PathVariable Long id,
             @RequestBody DogDTO dto,

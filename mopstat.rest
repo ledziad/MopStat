@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZXZ1c2VyIiwiaWF0IjoxNzQ4Nzk5MDg0LCJleHAiOjE3NDg4MDI2ODR9.6z6gWXRVadN5USHv5pUuf0SIHw9oVf1ot4TGnUoyL1o
+@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZXZ1c2VyIiwiaWF0IjoxNzQ5MDU2MjYxLCJleHAiOjE3NDkwNTk4NjF9.itROYnm0cv7bJ8bD-iBXQi-YxFD6c8r6PAYpcjhCB6c
 
 ### 1. Rejestracja testowego usera (możesz wykonać raz)
 POST http://localhost:8081/api/users/register

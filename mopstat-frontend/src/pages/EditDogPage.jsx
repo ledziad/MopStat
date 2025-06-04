@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
-
+import FriendlyAlert from "../components/FriendlyAlert";
 export default function EditDogPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [dog, setDog] = useState({ name: "", personality: "", imagePath: "" });
   const [error, setError] = useState("");
+  const [alert, setAlert] = useState(""); // stan alertu sukcesu
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,12 +32,18 @@ export default function EditDogPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     const token = localStorage.getItem("jwt");
     try {
       await axios.put(`http://localhost:8081/api/dogs/${id}`, dog, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      navigate("/dogs");
+      setAlert("Zmiany zapisane! 💾"); // alert sukcesu
+      setTimeout(() => {
+        setAlert("");
+        navigate("/dogs");
+      }, 1200);
+      return;
     } catch (err) {
       setError(
         err.response?.data && typeof err.response.data === "string"
@@ -93,8 +100,23 @@ export default function EditDogPage() {
             </button>
           </Link>
         </div>
-        {error && <div className="error">{error}</div>}
       </form>
+      {/* FriendlyAlert dla sukcesu */}
+      {alert && (
+        <FriendlyAlert
+          message={alert}
+          type="success"
+          onClose={() => setAlert("")}
+        />
+      )}
+      {/* FriendlyAlert dla błędu */}
+      {error && (
+        <FriendlyAlert
+          message={error}
+          type="error"
+          onClose={() => setError("")}
+        />
+      )}
     </div>
   );
 }

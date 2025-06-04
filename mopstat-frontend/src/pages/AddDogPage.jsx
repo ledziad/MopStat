@@ -1,13 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-
+import FriendlyAlert from "../components/FriendlyAlert";
 export default function AddDogPage() {
   const [name, setName] = useState("");
   const [personality, setPersonality] = useState("");
   const [imagePath, setImagePath] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [alert, setAlert] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +25,15 @@ export default function AddDogPage() {
           Authorization: `Bearer ${token}`,
         }
       });
-      navigate("/dogs");
+
+      // [FRIENDLY ALERT] — tu zamiast nawigacji od razu, najpierw pokaz alert:
+      setAlert("Dodano mopsa! 🐶");
+      setTimeout(() => {
+        setAlert("");      // schowaj alert po 1.2 sekundy
+        navigate("/dogs"); // przejdź po krótkim opóźnieniu
+      }, 1200);
+      return;
+
     } catch (err) {
       setError("Błąd dodawania psa! Uzupełnij poprawnie pola.");
     }
@@ -57,7 +67,22 @@ export default function AddDogPage() {
           <button type="button">Anuluj</button>
         </Link>
       </form>
-      {error && <div className="error">{error}</div>}
-    </div>
+       {/* [FRIENDLY ALERT] — wyświetl alert sukcesu (na wierzchu, w pastelowych kolorach) */}
+            {alert && (
+              <FriendlyAlert
+                message={alert}
+                type="success"
+                onClose={() => setAlert("")}
+              />
+            )}
+            {/* [FRIENDLY ALERT] — opcjonalnie możesz użyć FriendlyAlert także do error: */}
+            {error && (
+              <FriendlyAlert
+                message={error}
+                type="error"
+                onClose={() => setError("")}
+              />
+            )}
+          </div>
   );
 }

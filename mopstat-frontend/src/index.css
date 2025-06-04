@@ -720,3 +720,71 @@ button:focus-visible {
 .dogs-page .details-btn:hover {
   filter: brightness(0.97);
 }
+.friendly-alert {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  min-width: 240px;
+  max-width: 90vw;
+  padding: 1.1em 2.4em;
+  font-size: 1.09em;
+  border-radius: 18px;
+  font-weight: bold;
+  box-shadow: 0 2px 18px #e6e0d6;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0.96;
+  transition: opacity 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.friendly-alert.success {
+  background: #eaf8e3;
+  color: #24733c;
+  border: 2px solid #c1e2ba;
+}
+
+.friendly-alert.error {
+  background: #ffe4e4;
+  color: #9e2323;
+  border: 2px solid #f5b6b6;
+}
+.delete-dog-btn {
+  background: #ffe4e4;
+  color: #a02020;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.4em;
+  font-weight: bold;
+  margin-top: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px #f7eaea;
+  transition: filter 0.18s;
+}
+.delete-dog-btn:hover {
+  filter: brightness(0.97);
+}
+.delete-record-btn {
+  background: #ffe4e4;
+  color: #a02020;
+  border: none;
+  border-radius: 8px;
+  padding: 0.27em 0.9em;
+  cursor: pointer;
+  font-size: 0.98em;
+  box-shadow: 0 1px 3px #f7eaea;
+  margin-left: 8px;
+  font-weight: 500;
+  transition: filter 0.17s;
+}
+.delete-record-btn:hover {
+  filter: brightness(0.96);
+}
+.record-actions-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 12px;
+}

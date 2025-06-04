@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
-
+import FriendlyAlert from "../components/FriendlyAlert";
 export default function EditDailyRecordPage() {
   const { dogId, recordId } = useParams();
   const navigate = useNavigate();
@@ -13,8 +13,9 @@ export default function EditDailyRecordPage() {
     moodNote: "",
     dogId: dogId
   });
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(""); // stan błędu
+  const [alert, setAlert] = useState(""); // stan alertu sukcesu
+  const [loading, setLoading] = useState(true); // stan ładowania
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -40,6 +41,7 @@ export default function EditDailyRecordPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // czyść błąd przed próbą zapisu
     const token = localStorage.getItem("jwt");
     try {
       await axios.put(
@@ -47,7 +49,12 @@ export default function EditDailyRecordPage() {
         record,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      navigate(`/dogs/${dogId}`);
+      setAlert("Zmiany zapisane! 💾"); // pokaz alert
+      setTimeout(() => {
+        setAlert("");
+        navigate(`/dogs/${dogId}`);
+      }, 1200); // przejdź po 1.2 sek
+      return;
     } catch (err) {
       setError(
         err.response?.data && typeof err.response.data === "string"
@@ -109,25 +116,40 @@ export default function EditDailyRecordPage() {
             required
           />
         </label>
-      <label>
-        Notatka / Nastrój:
-        <textarea
-          name="moodNote"
-          value={record.moodNote}
-          onChange={handleChange}
-          placeholder="np. wesoły, energiczny, śpioch"
-          rows={2}
-          className="edit-textarea"
-        />
-      </label>
+        <label>
+          Notatka / Nastrój:
+          <textarea
+            name="moodNote"
+            value={record.moodNote}
+            onChange={handleChange}
+            placeholder="np. wesoły, energiczny, śpioch"
+            rows={2}
+            className="edit-textarea"
+          />
+        </label>
         <div className="form-buttons">
           <button className="save-btn" type="submit">Zapisz zmiany</button>
           <Link to={`/dogs/${dogId}`}>
             <button className="cancel-btn" type="button">Anuluj</button>
           </Link>
         </div>
-        {error && <div className="error">{error}</div>}
       </form>
+      {/* FriendlyAlert dla sukcesu */}
+      {alert && (
+        <FriendlyAlert
+          message={alert}
+          type="success"
+          onClose={() => setAlert("")}
+        />
+      )}
+      {/* FriendlyAlert dla błędu */}
+      {error && (
+        <FriendlyAlert
+          message={error}
+          type="error"
+          onClose={() => setError("")}
+        />
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
+import FriendlyAlert from "../components/FriendlyAlert";
 export default function AddRecordPage() {
   const { dogId } = useParams();
   const [date, setDate] = useState("");
@@ -10,6 +10,7 @@ export default function AddRecordPage() {
   const [walks, setWalks] = useState(1);
   const [moodNote, setMoodNote] = useState("");
   const [error, setError] = useState("");
+  const [alert, setAlert] = useState(""); // [FRIENDLY ALERT] — stan na alert sukcesu
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -28,7 +29,15 @@ export default function AddRecordPage() {
           Authorization: `Bearer ${token}`,
         }
       });
-      navigate(`/dogs/${dogId}`);
+
+      // [FRIENDLY ALERT] — najpierw alert, potem nawigacja
+      setAlert("Dodano wpis dzienny! ✅");
+      setTimeout(() => {
+        setAlert("");
+        navigate(`/dogs/${dogId}`);
+      }, 1200);
+      return;
+
     } catch (err) {
       setError("Błąd dodawania wpisu dziennego!");
     }
@@ -73,10 +82,25 @@ export default function AddRecordPage() {
         />
         <button type="submit">Dodaj wpis</button>
         <Link to={`/dogs/${dogId}`}>
-                  <button type="button">Anuluj</button>
-                </Link>
+          <button type="button">Anuluj</button>
+        </Link>
       </form>
-      {error && <div className="error">{error}</div>}
+      {/* [FRIENDLY ALERT] — alert sukcesu */}
+      {alert && (
+        <FriendlyAlert
+          message={alert}
+          type="success"
+          onClose={() => setAlert("")}
+        />
+      )}
+      {/* [FRIENDLY ALERT] — alert błędu */}
+      {error && (
+        <FriendlyAlert
+          message={error}
+          type="error"
+          onClose={() => setError("")}
+        />
+      )}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import DogDetailsPage from "./pages/DogDetailsPage";
 import AddRecordPage from "./pages/AddRecordPage";
 import EditDogPage from "./pages/EditDogPage";
 import EditDailyRecordPage from "./pages/EditDailyRecordPage";
+import pugIcon from "./assets/pug.png";
 
 // Dodaj cytaty do losowania
 const quotes = [
@@ -23,9 +24,19 @@ function App() {
     <BrowserRouter>
       {/* --- Mopsowy nagłówek --- */}
       <div style={{ textAlign: "center", margin: "32px 0" }}>
-        <h1 style={{ fontSize: "2.3rem" }}>
-          🐶 <span style={{ color: "#876445" }}>MopStat</span> — Twój dziennik opieki nad mopsami 🐾
-        </h1>
+          <h1 style={{ fontSize: "2.3rem" }}>
+             <img
+               src={pugIcon}
+               alt="mops"
+               style={{
+                 height: "1.5em",
+                 verticalAlign: "middle",
+                 marginRight: "0.2em",
+                 marginBottom: "0.13em"
+               }}
+             />
+             <span style={{ color: "#876445" }}>MopStat</span> — Twój dziennik opieki nad mopsami 🐾
+           </h1>
         <p style={{ fontStyle: "italic", color: "#808080", marginTop: 12 }}>
           „Najlepszy dzień zaczyna się od spaceru z mopsem!” 🚶‍♂️🐾
         </p>
