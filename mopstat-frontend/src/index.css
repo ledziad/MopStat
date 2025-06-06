@@ -1,0 +1,790 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  background: #fcf6ea !important; /* poziom 8/10 */
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.add-dog-page {
+  max-width: 410px;
+  margin: 60px auto 0 auto;
+  background: #f9f5ef;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px #e6e0d6;
+  padding: 2.2em 2em 1.8em 2em;
+}
+
+.add-dog-page h2 {
+  color: #604c32;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.add-dog-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.add-dog-page input[type="text"] {
+  border-radius: 12px;
+  border: 1px solid #e3e3db;
+  padding: 0.55em;
+  background: #f8f3ea;
+  margin-top: 6px;
+  font-size: 1em;
+}
+
+.add-dog-page button {
+  background: #eaf8e3;
+  color: #3d2c16;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.4em;
+  font-weight: bold;
+  box-shadow: 0 2px 6px #e3e3db;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 6px;
+}
+
+.add-dog-page button[type="button"] {
+  background: #faf6ec;
+  color: #604c32;
+}
+
+.add-dog-page .error {
+  color: crimson;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.add-record-page {
+  max-width: 410px;
+  margin: 60px auto 0 auto;
+  background: #f9f5ef;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px #e6e0d6;
+  padding: 2.2em 2em 1.8em 2em;
+}
+
+.add-record-page h2 {
+  color: #604c32;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.add-record-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.add-record-page input[type="number"],
+.add-record-page input[type="date"],
+.add-record-page input[type="text"] {
+  border-radius: 12px;
+  border: 1px solid #e3e3db;
+  padding: 0.55em;
+  background: #f8f3ea;
+  margin-top: 6px;
+  font-size: 1em;
+}
+
+.add-record-page button {
+  background: #eaf8e3;
+  color: #3d2c16;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.4em;
+  font-weight: bold;
+  box-shadow: 0 2px 6px #e3e3db;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.add-record-page .error {
+  color: crimson;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+.dog-details-page {
+  max-width: 600px;
+  margin: 40px auto 0 auto;
+  background: #f9f5ef;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px #e6e0d6;
+  padding: 2em 2em 1.5em 2em;
+}
+
+.dog-details-page h2 {
+  color: #604c32;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.dog-details-personality {
+  color: #725537;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.dog-details-image {
+  display: block;
+  margin: 14px auto 10px auto;
+  border-radius: 14px;
+  width: 120px;
+  height: auto;
+  box-shadow: 0 2px 6px #d8cdbf;
+  object-fit: cover;
+}
+
+.daily-record-list {
+  padding-left: 0;
+  margin-top: 18px;
+  margin-bottom: 10px;
+}
+
+.daily-record-list li {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ede6d7;
+  padding-bottom: 7px;
+  list-style: none;
+  font-size: 1.02em;
+  background: #fffbe8;
+  border-radius: 9px;
+  padding: 12px;
+  box-shadow: 0 1px 6px #f0e8d7;
+}
+
+.edit-record-btn {
+  margin-left: 14px;
+  background: #eaf8e3;
+  color: #3d2c16;
+  border: none;
+  border-radius: 8px;
+  padding: 0.27em 0.9em;
+  cursor: pointer;
+  font-size: 0.98em;
+  box-shadow: 0 1px 3px #e3e3db;
+}
+
+.dog-details-page button,
+.dog-details-back-btn {
+  margin-top: 16px;
+  background: #faf6ec;
+  color: #604c32;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.4em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px #e3e3db;
+}
+
+.dog-details-error {
+  color: crimson;
+  margin: 20px 0;
+  text-align: center;
+  font-weight: 500;
+}
+.dogs-page {
+  max-width: 540px;
+  margin: 40px auto 0 auto;
+  background: #f9f5ef;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px #e6e0d6;
+  padding: 2.2em 2em 1.8em 2em;
+}
+
+.dogs-page h2 {
+  color: #604c32;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dogs-page .export-btn {
+  background: #eaf8e3;
+  color: #3d2c16;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.6em;
+  font-weight: bold;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 10px #ececec;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dogs-page .summary-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 24px 0;
+}
+/* Dashboard kafelki - suma punktów, liczba wpisów, top mops */
+.dashboard-mops {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 0 0 34px 0;
+}
+
+.dashboard-tile {
+  background: #fffbe7;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 10px #ececec;
+  text-align: center;
+  min-width: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-label {
+  font-size: 1.01em;
+  color: #987b57;
+  margin-bottom: 4px;
+}
+
+.dashboard-value {
+  font-size: 1.27em;
+  font-weight: 600;
+  color: #4a3d28;
+  margin-top: 3px;
+  letter-spacing: 0.03em;
+}
+.chart-container {
+  width: 100%;
+  max-width: 540px;
+  height: 280px;
+  margin: 36px auto 0 auto;
+  background: #fffbe7;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px #ececec;
+  padding: 18px 0 12px 0;
+}
+.chart-title {
+  text-align: center;
+  margin-bottom: 8px;
+  color: #6b522c;
+}
+
+.dogs-page .summary-tile {
+  background: #fffbe7;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px #ececec;
+  text-align: center;
+}
+.dogs-page .summary-tile.meals { background: #fffbe7; }
+.dogs-page .summary-tile.poops { background: #eafcf5; }
+.dogs-page .summary-tile.walks { background: #f5ecfc; }
+.dogs-page .summary-tile.moods { background: #fcf0ec; }
+
+.dogs-page .summary-tile div:first-child {
+  font-size: 2.1rem;
+  margin-bottom: 4px;
+}
+
+.dogs-page .add-btn {
+  margin-bottom: 24px;
+  background: #eaf8e3;
+  color: #3d2c16;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.4em;
+  font-weight: bold;
+  box-shadow: 0 2px 6px #e3e3db;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dogs-page .dog-list {
+  margin-top: 20px;
+  padding: 0;
+}
+
+.dogs-page .dog-list li {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ede6d7;
+  padding-bottom: 10px;
+  list-style: none;
+  background: #fffbe7;
+  border-radius: 14px;
+  box-shadow: 0 1px 6px #f0e8d7;
+  padding: 18px;
+}
+
+.dogs-page .dog-name {
+  color: #6d573b;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.dogs-page .dog-personality {
+  color: #3d2c16;
+}
+
+.dogs-page .dog-img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  box-shadow: 0 1px 4px #e2decf;
+}
+
+.dogs-page .details-btn {
+  margin-right: 12px;
+  background: #f3e7d5;
+  color: #5e4429;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 1px 3px #e3e3db;
+}
+
+.dogs-page .edit-btn {
+  background: #eaf8e3;
+  color: #3d2c16;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 1px 3px #e3e3db;
+}
+
+.dogs-page .logout-btn {
+  margin-top: 25px;
+  background: #e1d6c0;
+  color: #604c32;
+  border: none;
+  border-radius: 12px;
+  padding: 0.6em 1.4em;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 2px 6px #e3e3db;
+}
+
+.dogs-page .error {
+  color: crimson;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.edit-record-page {
+  background: #fdfbf7; /* poziom 9/10 */
+  max-width: 420px;
+  margin: 40px auto 0 auto;
+  background: #f9f5ef;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px #e6e0d6;
+  padding: 2.2em 2em 1.8em 2em;
+}
+
+.edit-record-page h2 {
+  color: #604c32;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.edit-record-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.edit-record-page input[type="number"],
+.edit-record-page input[type="date"],
+.edit-record-page input[type="text"] {
+  border-radius: 12px;
+  border: 1px solid #e3e3db;
+  padding: 0.55em;
+  background: #f8f3ea;
+  margin-top: 6px;
+  font-size: 1em;
+}
+
+.edit-record-page .form-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.edit-record-page .save-btn {
+  background: #ddeed6;         /* pastelowa, bardzo jasna zieleń */
+  color: #2b3327;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.6em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.edit-record-page .cancel-btn {
+  background: #f6ede0;         /* pastelowy beż, jaśniejszy niż wcześniej */
+  color: #7d5c38;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.6em;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.edit-record-page .error {
+  color: crimson;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+.edit-dog-page {
+  max-width: 420px;
+  margin: 40px auto 0 auto;
+  background: #f9f5ef;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px #e6e0d6;
+  padding: 2.5em 2em 2em 2em;
+}
+
+.edit-dog-page h2 {
+  color: #604c32;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.edit-dog-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.edit-dog-page input[type="text"] {
+  border-radius: 12px;
+  border: 1px solid #e3e3db;
+  padding: 0.55em;
+  background: #f8f3ea;
+  margin-top: 6px;
+  font-size: 1em;
+}
+
+.edit-dog-page .form-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.edit-dog-page .save-btn {
+  background: #e3eed2;
+  color: #3d2c16;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.6em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.edit-dog-page .cancel-btn {
+  background: #faf6ec;
+  color: #604c32;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.6em;
+  cursor: pointer;
+}
+
+.edit-dog-page .error {
+  color: crimson;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+.login-page {
+  max-width: 350px;
+  margin: 100px auto 0 auto;
+  background: #f9f5ef;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px #e6e0d6;
+  padding: 2.5em 2em 2em 2em;
+}
+
+.login-page h2 {
+  color: #604c32;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.login-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-page input[type="text"],
+.login-page input[type="password"] {
+  border-radius: 12px;
+  border: 1px solid #e3e3db;
+  padding: 0.55em;
+  background: #f8f3ea;
+  margin-top: 4px;
+  font-size: 1em;
+}
+
+.login-page button {
+  background: #eaf8e3;
+  color: #3d2c16;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.4em;
+  font-weight: bold;
+  box-shadow: 0 2px 6px #e3e3db;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-page .error {
+  color: crimson;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.login-page .success {
+  color: #218838;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.login-page .switch-link {
+  margin-top: 14px;
+  text-align: center;
+}
+.register-page {
+  max-width: 350px;
+  margin: 100px auto 0 auto;
+  background: #f9f5ef;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px #e6e0d6;
+  padding: 2.5em 2em 2em 2em;
+}
+
+.register-page h2 {
+  color: #604c32;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.register-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.register-page input[type="text"],
+.register-page input[type="password"],
+.register-page input[type="email"] {
+  border-radius: 12px;
+  border: 1px solid #e3e3db;
+  padding: 0.55em;
+  background: #f8f3ea;
+  margin-top: 4px;
+  font-size: 1em;
+}
+
+.register-page button {
+  background: #eaf8e3;
+  color: #3d2c16;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.4em;
+  font-weight: bold;
+  box-shadow: 0 2px 6px #e3e3db;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.register-page .error {
+  color: crimson;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.register-page .success {
+  color: #218838;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.register-page .switch-link {
+  margin-top: 14px;
+  text-align: center;
+}
+.edit-record-page textarea.edit-textarea {
+  border-radius: 12px;
+  border: 1px solid #e3e3db;
+  padding: 0.55em;
+  background: #fbf9f4;
+  margin-top: 6px;
+  margin-left: 16px;
+  font-size: 1em;
+  resize: vertical;
+  min-height: 36px;
+}
+.dogs-page .summary-tile.meals { background: #fefbe9 !important; }
+.dogs-page .summary-tile.poops { background: #f5fcf9 !important; }
+.dogs-page .summary-tile.walks { background: #f9f8fd !important; }
+.dogs-page .summary-tile.moods { background: #fcf9f8 !important; }
+
+.dogs-page button:hover,
+.dogs-page .add-btn:hover,
+.dogs-page .export-btn:hover,
+.dogs-page .edit-btn:hover,
+.dogs-page .details-btn:hover {
+  filter: brightness(0.97);
+}
+.friendly-alert {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  min-width: 240px;
+  max-width: 90vw;
+  padding: 1.1em 2.4em;
+  font-size: 1.09em;
+  border-radius: 18px;
+  font-weight: bold;
+  box-shadow: 0 2px 18px #e6e0d6;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0.96;
+  transition: opacity 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.friendly-alert.success {
+  background: #eaf8e3;
+  color: #24733c;
+  border: 2px solid #c1e2ba;
+}
+
+.friendly-alert.error {
+  background: #ffe4e4;
+  color: #9e2323;
+  border: 2px solid #f5b6b6;
+}
+.delete-dog-btn {
+  background: #ffe4e4;
+  color: #a02020;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.4em;
+  font-weight: bold;
+  margin-top: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px #f7eaea;
+  transition: filter 0.18s;
+}
+.delete-dog-btn:hover {
+  filter: brightness(0.97);
+}
+.delete-record-btn {
+  background: #ffe4e4;
+  color: #a02020;
+  border: none;
+  border-radius: 8px;
+  padding: 0.27em 0.9em;
+  cursor: pointer;
+  font-size: 0.98em;
+  box-shadow: 0 1px 3px #f7eaea;
+  margin-left: 8px;
+  font-weight: 500;
+  transition: filter 0.17s;
+}
+.delete-record-btn:hover {
+  filter: brightness(0.96);
+}
+.record-actions-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 12px;
+}
