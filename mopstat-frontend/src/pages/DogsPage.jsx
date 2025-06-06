@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import WeatherWidget from "../components/WeatherWidget";
 
 export default function DogsPage() {
   const [dogs, setDogs] = useState([]);
@@ -77,6 +78,7 @@ export default function DogsPage() {
 
   return (
     <div className="dogs-page">
+        <WeatherWidget />
       <h2>Twoje psy</h2>
       <button
         className="export-btn"
