@@ -1,58 +1,67 @@
+# MopStat – Aplikacja do codziennego rejestrowania opieki nad psami
 
+Projekt zrealizowany przez:  
+Adam Ledziński
 
+## Opis projektu
 
-## 🚀 **Jak uruchomić backend MopStat (Spring Boot)**
+MopStat to webowa aplikacja, która pozwala użytkownikowi rejestrować karmienia, spacery, kupki i nastroje psów w sposób łatwy, wygodny i nowoczesny.  
+Projekt powstał, aby wesprzeć właścicieli oraz fundacje w codziennej organizacji dnia z pupilem – z elementami grywalizacji i lekkim, pastelowym interfejsem.
 
-1. **Wymagania wstępne:**
+## Główne funkcje
 
-    * Java 17+ (zalecane JDK 21 lub wyżej)
-    * Maven 3.6+
-    * (Opcjonalnie: IntelliJ IDEA lub VSCode z wtyczką Java)
-    * GIT (jeśli klonujesz repo)
+- Rejestracja/logowanie użytkowników (JWT)
+- Dodawanie i edycja psów (własnych, fundacyjnych)
+- Wpisy dzienne: karmienie, spacery, kupki, nastroje
+- Automatyczna punktacja i dashboard z rankingiem opieki
+- Eksport danych do CSV
+- Widget pogodowy na dashboardzie (dane z API Open-Meteo)
+- Każdy użytkownik widzi wyłącznie swoje dane (pełne bezpieczeństwo)
+- Przyjazny, minimalistyczny interfejs (SPA, React)
 
-2. **Klonowanie projektu:**
+## Wymagania techniczne
 
-   ```bash
-   git clone https://github.com/ledziad/MopStat.git
-   cd MopStat
-   ```
+- **Backend:** Java 17+, Spring Boot 3.x, Maven, JPA, Swagger, JWT
+- **Frontend:** React 18+, axios, react-router-dom
+- **Baza:** H2/SQLite/PostgreSQL (możliwa podmiana)
+- **Testy:** JUnit, MockMvc
+- **Node.js:** do uruchomienia frontendu
 
-3. **Build projektu (opcjonalnie, Maven):**
+## Jak uruchomić projekt?
 
-   ```bash
-   mvn clean install
-   ```
+1. **Backend**
+   - Otwórz folder `src`.
+   - `./mvnw spring-boot:run`  
+     (lub `mvn spring-boot:run`)
+   - Domyślnie uruchamia się na `localhost:8081`.
 
-4. **Uruchomienie aplikacji:**
+2. **Frontend**
+   - Przejdź do katalogu `mopstat-frontend`.
+   - `npm install`
+   - `npm run dev`
+   - Domyślny port: `localhost:5173`.
 
-   ```bash
-   mvn spring-boot:run
-   ```
+3. **Logowanie/rejestracja**
+   - Załóż konto przez formularz rejestracyjny (`http://localhost:5173/register`).
+   - Zaloguj się, aby korzystać z funkcji aplikacji. (`http://localhost:5173/login`)
 
-   Lub w IntelliJ:
+4. **Swagger UI**
+   - Dokumentacja i testy API dostępne pod:  
+     `http://localhost:8081/swagger-ui/index.html`
 
-    * Otwórz projekt → kliknij prawym na klasę z adnotacją `@SpringBootApplication` (np. `MopStatApplication`) → **Run 'MopStatApplication'**.
+## Przykładowe konta testowe
 
-5. **Dostęp do API:**
+- Możesz samodzielnie zarejestrować użytkownika.
 
-    * Backend domyślnie działa pod adresem:
-      `http://localhost:8080`
-    * Dokumentacja interaktywna (Swagger UI):
-      `http://localhost:8080/swagger-ui.html`
-      lub
-      `http://localhost:8080/swagger-ui/index.html`
+## Autor
 
-6. **Baza danych:**
+Adam Ledziński  
+mail: [ledzinski.adam@gmail.com]  
+Projekt realizowany samodzielnie
 
-    * Domyślnie H2 (w pamięci, do testów/dev).
-    * Konsola H2:
-      `http://localhost:8080/h2-console`
-      (login: `sa`, hasło puste, JDBC URL znajdziesz w `application.properties`)
+## Licencja
 
-7. **Domyślna konfiguracja JWT:**
-
-    * Endpoint rejestracji/logowania: `/api/auth/register`, `/api/auth/login`
-    * Po zalogowaniu – token JWT należy przekazywać w nagłówku:
-      `Authorization: Bearer <token>`
+Do użytku dydaktycznego.
 
 ---
+
